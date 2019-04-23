@@ -1,0 +1,142 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "",
+  "projects": {
+    "angulardj": {
+      "root": "apps/angulardj/",
+      "sourceRoot": "apps/angulardj/src",
+      "projectType": "application",
+      "prefix": "angulardj",
+      "schematics": {
+        "@nrwl/schematics:component": {
+          "style": "scss"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/angulardj",
+            "index": "apps/angulardj/src/index.html",
+            "main": "apps/angulardj/src/main.ts",
+            "polyfills": "apps/angulardj/src/polyfills.ts",
+            "tsConfig": "apps/angulardj/tsconfig.app.json",
+            "assets": [
+              "apps/angulardj/src/favicon.ico",
+              "apps/angulardj/src/assets"
+            ],
+            "styles": ["apps/angulardj/src/styles.scss"],
+            "scripts": [],
+            "es5BrowserSupport": true
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/angulardj/src/environments/environment.ts",
+                  "with": "apps/angulardj/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "angulardj:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "angulardj:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "angulardj:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/angulardj/tsconfig.app.json",
+              "apps/angulardj/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/builders:jest",
+          "options": {
+            "jestConfig": "apps/angulardj/jest.config.js",
+            "tsConfig": "apps/angulardj/tsconfig.spec.json",
+            "setupFile": "apps/angulardj/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "angulardj-e2e": {
+      "root": "apps/angulardj-e2e",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/builders:cypress",
+          "options": {
+            "cypressConfig": "apps/angulardj-e2e/cypress.json",
+            "tsConfig": "apps/angulardj-e2e/tsconfig.e2e.json",
+            "devServerTarget": "angulardj:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "angulardj:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "apps/angulardj-e2e/tsconfig.e2e.json",
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "warnings": {
+      "typescriptMismatch": false,
+      "versionMismatch": false
+    },
+    "defaultCollection": "@nrwl/schematics"
+  },
+  "schematics": {
+    "@nrwl/schematics:application": {
+      "style": "scss",
+      "framework": "angular"
+    },
+    "@nrwl/schematics:library": {
+      "style": "scss"
+    }
+  },
+  "defaultProject": "angulardj"
+}
